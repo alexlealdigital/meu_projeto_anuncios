@@ -3,7 +3,7 @@ import { getFirestore, collection, getDocs } from "https://www.gstatic.com/fireb
 
 // Configuração do Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyAZMXBbStSpVC0cY3iZpWSgNnThXHjDRNE",
+    apiKey: "",
     authDomain: "adslzweb.firebaseapp.com",
     projectId: "adslzweb",
     storageBucket: "adslzweb.appspot.com",
