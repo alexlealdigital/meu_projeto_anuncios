@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
-// 🔥 Configuração Firebase
+// 🔥 Configuração do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyAZMXBbStSpVC0cY3iZpWSgNnThXHjDRNE",
     authDomain: "adslzweb.firebaseapp.com",
@@ -16,10 +16,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// 🔥 Função para carregar anúncios
+// 🔥 Função para carregar e exibir anúncios
 async function carregarAnuncios() {
     console.log("🚀 Iniciando carregamento de anúncios...");
-    
+
     const container = document.getElementById("ad-container");
     if (!container) {
         console.error("❌ ERRO: Elemento #ad-container não encontrado no HTML.");
@@ -46,10 +46,15 @@ async function carregarAnuncios() {
             ad.classList.add("ad-card");
 
             ad.innerHTML = `
-                <h2>${data.titulo}</h2>
-                <p>${data.descricao}</p>
-                <img src="${data.imagem}" alt="Anúncio" onerror="this.src='https://via.placeholder.com/320x50?text=Erro+na+Imagem';">
-                <a href="${data.link}" target="_blank">Ver mais</a>
+                <div style="display: flex; align-items: center; border: 1px solid #ddd; padding: 10px; max-width: 320px;">
+                    <img src="${data.imagem}" alt="Anúncio" style="width: 50px; height: 50px; margin-right: 10px;" 
+                        onerror="this.src='https://via.placeholder.com/50x50?text=Erro';">
+                    <div>
+                        <h3 style="margin: 0; font-size: 14px;">${data.titulo}</h3>
+                        <p style="margin: 0; font-size: 12px;">${data.descricao}</p>
+                        <a href="${data.link}" target="_blank" style="color: blue; text-decoration: none; font-size: 12px;">Ver mais</a>
+                    </div>
+                </div>
             `;
 
             container.appendChild(ad);
