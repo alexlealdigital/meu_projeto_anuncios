@@ -4,50 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anúncios Dinâmicos</title>
-    <link rel="icon" href="data:,">
-    
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
         }
+        #ad-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
         .ad-card {
             display: flex;
             align-items: center;
             justify-content: space-between;
             border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px auto;
+            padding: 15px;
             max-width: 320px;
             background-color: #f9f9f9;
             border-radius: 8px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
         }
         .ad-card img {
             width: 50px;
             height: 50px;
-            border-radius: 8px;
+            border-radius: 5px;
+            margin-right: 10px;
         }
-        .ad-text {
+        .ad-content {
             flex: 1;
             text-align: left;
-            padding: 0 10px;
         }
-        .ad-card h2 {
+        .ad-title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .ad-description {
             font-size: 14px;
-            margin: 5px 0;
-        }
-        .ad-card p {
-            font-size: 12px;
             color: #555;
         }
         .ad-card a {
             text-decoration: none;
             color: white;
             background-color: #007bff;
-            padding: 5px 10px;
+            padding: 8px 12px;
             border-radius: 5px;
-            font-size: 12px;
+            font-size: 14px;
         }
     </style>
 </head>
