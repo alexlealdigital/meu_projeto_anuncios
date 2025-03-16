@@ -1,109 +1,56 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus Anúncios</title>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        #ad-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-        .ad-card {
-            width: 320px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .ad-card img {
-            width: 320px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-        .ad-card a {
-            display: block;
-            margin-top: 10px;
-            text-decoration: none;
-            background-color: #007bff;
-            color: white;
-            padding: 8px;
-            border-radius: 5px;
-        }
-        .ad-card a:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>Anúncios</h1>
-    <div id="ad-container"></div>
-
-    <script>
-        // 🔥 Configuração do Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyCnl6jWa4DdgD1SCSDo_6c7A1WKTLRb0BI",
+    const firebaseConfig = {
+        apiKey: "AIzaSyAZMXBbStSpVC0cY3iZpWSgNnThXHjDRNE",
             authDomain: "adslzweb.firebaseapp.com",
             projectId: "adslzweb",
-            storageBucket: "adslzweb.appspot.com",
-            messagingSenderId: ""123456789012",
-            appId: "1:123456789012:web:abcdef123456"
-        };
+            storageBucket: "adslzweb.firebasestorage.app",
+            messagingSenderId: "728846463963",
+            appId: "1:728846463963:web:ef72c03c782a36758d6dfe"
+    };
 
-        // Inicializa o Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+    // Inicializa o Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-        // 🔥 Função para carregar anúncios do Firestore
-        async function carregarAnuncios() {
-            const container = document.getElementById("ad-container");
-            container.innerHTML = "<p>Carregando anúncios...</p>";
+    // 🔥 Função para buscar todos os anúncios
+    async function carregarAnuncios() {
+        const container = document.getElementById("ad-container");
+        container.innerHTML = "<p>Carregando anúncios...</p>";
 
-            try {
-                const querySnapshot = await db.collection("anuncios_v2").get();
-                container.innerHTML = ""; // Limpa o loading
+        try {
+            const querySnapshot = await getDocs(collection(db, "anuncios_v2"));
+            container.innerHTML = ""; // Limpa o loading
 
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const ad = document.createElement("div");
-                    ad.classList.add("ad-card");
-
-                    ad.innerHTML = `
-                        <h2>${data.titulo}</h2>
-                        <p>${data.descricao}</p>
-                        <img src="${data.imagem}" alt="Anúncio">
-                        <a href="${data.link}" target="_blank">Ver mais</a>
-                    `;
-                    container.appendChild(ad);
-                });
-
-                if (querySnapshot.empty) {
-                    container.innerHTML = "<p>Nenhum anúncio disponível.</p>";
-                }
-            } catch (error) {
-                container.innerHTML = `<p>Erro ao carregar anúncios: ${error.message}</p>`;
-                console.error("Erro ao carregar anúncios:", error);
+            if (querySnapshot.empty) {
+                container.innerHTML = "<p>Nenhum anúncio disponível.</p>";
+                return;
             }
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                console.log("Anúncio carregado:", data);
+
+                const ad = document.createElement("div");
+                ad.classList.add("ad-card");
+
+                ad.innerHTML = `
+                    <h2>${data.titulo}</h2>
+                    <p>${data.descricao}</p>
+                    <img src="${data.imagem}" alt="Anúncio">
+                    <a href="${data.link}" target="_blank">Ver mais</a>
+                `;
+                container.appendChild(ad);
+            });
+
+        } catch (error) {
+            container.innerHTML = `<p>Erro ao carregar anúncios: ${error.message}</p>`;
+            console.error("Erro ao carregar anúncios:", error);
         }
+    }
 
-        // 🔥 Chama a função ao carregar a página
-        carregarAnuncios();
-    </script>
-
-</body>
-</html>
+    // Chama a função ao carregar a página
+    carregarAnuncios();
+</script>
