@@ -22,7 +22,7 @@ async function carregarAnuncios() {
     adContainer.innerHTML = "<p>Carregando anúncios...</p>";
 
     try {
-        const querySnapshot = await getDocs(collection(db, "anuncios_v2"));
+        const querySnapshot = await getDocs(collection(db, "anuncios"));
 
         if (querySnapshot.empty) {
             adContainer.innerHTML = "<p>Nenhum anúncio disponível.</p>";
