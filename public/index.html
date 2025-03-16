@@ -1,57 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <link rel="icon" href="data:,">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anúncios</title>
+    <title>Anúncios Dinâmicos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
         }
-        #ad-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
         .ad-card {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             border: 1px solid #ddd;
             padding: 15px;
+            margin: 10px auto;
             max-width: 320px;
             background-color: #f9f9f9;
             border-radius: 8px;
-            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
         }
-        .ad-card img {
+        .ad-img {
             width: 50px;
             height: 50px;
-            border-radius: 5px;
+            border-radius: 8px;
             margin-right: 10px;
         }
-        .ad-content {
-            flex: 1;
+        .ad-info {
+            flex-grow: 1;
             text-align: left;
         }
-        .ad-title {
+        .ad-info h2 {
             font-size: 16px;
-            font-weight: bold;
+            margin: 5px 0;
         }
-        .ad-description {
-            font-size: 14px;
+        .ad-info p {
+            font-size: 12px;
             color: #555;
         }
-        .ad-card a {
+        .ad-button {
             text-decoration: none;
             color: white;
             background-color: #007bff;
-            padding: 8px 12px;
+            padding: 10px;
             border-radius: 5px;
             font-size: 14px;
         }
