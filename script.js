@@ -1,32 +1,63 @@
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("🔄 Teste manual de anúncio iniciado...");
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-    const container = document.getElementById("ad-container");
-    container.innerHTML = ""; // Limpa qualquer conteúdo anterior
+// Configuração do Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyAZMXBbStSpVC0cY3iZpWSgNnThXHjDRNE",
+    authDomain: "adslzweb.firebaseapp.com",
+    projectId: "adslzweb",
+    storageBucket: "adslzweb.firebasestorage.app",
+    messagingSenderId: "728846463963",
+    appId: "1:728846463963:web:ef72c03c782a36758d6dfe"
+};
 
-    // Simulação de um anúncio (dados estáticos)
-    const anuncioTeste = {
-        titulo: "Oferta Especial",
-        descricao: "Anuncie aqui!",
-        imagem: "https://firebasestorage.googleapis.com/v0/b/adslzweb.appspot.com/o/anuncio01.png?alt=media&token=4c27ccc1-8cdf-405f-a070-742a710e9028",
-        link: "https://www.google.com.br/"
-    };
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-    // Criando um card de anúncio
-    const adCard = document.createElement("div");
-    adCard.classList.add("ad-card");
+async function carregarAnuncios() {
+    console.log("🔄 Iniciando carregamento de anúncios...");
 
-    adCard.innerHTML = `
-        <div style="display: flex; align-items: center; border: 1px solid #ddd; padding: 10px; max-width: 350px; border-radius: 8px; background-color: #f9f9f9;">
-            <img src="${anuncioTeste.imagem}" alt="${anuncioTeste.titulo}" onerror="this.src='https://placehold.co/100x100?text=Erro'" style="width: 50px; height: 50px; border-radius: 8px; margin-right: 10px;">
-            <div style="flex-grow: 1;">
-                <h2 style="font-size: 14px; margin: 0;">${anuncioTeste.titulo}</h2>
-                <p style="font-size: 12px; color: #555; margin: 0;">${anuncioTeste.descricao}</p>
-            </div>
-            <a href="${anuncioTeste.link}" target="_blank" style="background-color: #007bff; color: white; padding: 8px 12px; border-radius: 5px; text-decoration: none; font-size: 12px;">Visitar</a>
-        </div>
-    `;
+    const adContainer = document.getElementById("ad-container");
+    adContainer.innerHTML = "<p>Carregando anúncios...</p>";
 
-    container.appendChild(adCard);
-    console.log("✅ Teste manual concluído: Anúncio carregado.");
-});
+    try {
+        const querySnapshot = await getDocs(collection(db, "anuncios_v2"));
+
+        if (querySnapshot.empty) {
+            adContainer.innerHTML = "<p>Nenhum anúncio disponível.</p>";
+            console.warn("⚠ Nenhum anúncio encontrado no Firestore.");
+            return;
+        }
+
+        adContainer.innerHTML = ""; // Limpa a mensagem de carregamento
+
+        querySnapshot.forEach((doc) => {
+            const anuncio = doc.data();
+            console.log("✅ Anúncio carregado:", anuncio);
+
+            // Criando o layout do anúncio
+            const adCard = document.createElement("div");
+            adCard.classList.add("ad-card");
+
+            adCard.innerHTML = `
+                <div class="ad-container">
+                    <img class="ad-img" src="${anuncio.imagem}" alt="${anuncio.titulo}">
+                    <div class="ad-info">
+                        <h2>${anuncio.titulo}</h2>
+                        <p>${anuncio.descricao}</p>
+                    </div>
+                    <a class="ad-button" href="${anuncio.link}" target="_blank">Visitar</a>
+                </div>
+            `;
+
+            adContainer.appendChild(adCard);
+        });
+
+    } catch (error) {
+        console.error("❌ Erro ao carregar anúncios:", error);
+        adContainer.innerHTML = "<p>Erro ao carregar anúncios.</p>";
+    }
+}
+
+carregarAnuncios();
