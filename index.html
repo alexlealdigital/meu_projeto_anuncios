@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anúncios Dinâmicos</title>
-    <link rel="icon" href="data:,"> <!-- Evita erro de favicon -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,37 +17,38 @@
             max-width: 320px;
             background-color: #f9f9f9;
             border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         .ad-card img {
-            width: 100px;
-            height: auto;
+            width: 50px;
+            height: 50px;
             border-radius: 8px;
         }
-        .ad-card h2 {
-            font-size: 18px;
-            margin: 10px 0;
-        }
-        .ad-card p {
-            font-size: 14px;
-            color: #555;
+        .ad-card .ad-text {
+            flex-grow: 1;
+            padding: 0 10px;
+            text-align: left;
         }
         .ad-card a {
-            display: block;
             text-decoration: none;
             color: white;
             background-color: #007bff;
             padding: 10px;
             border-radius: 5px;
-            margin-top: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
+
     <h1>Anúncios</h1>
     <div id="ad-container">
         <p>Carregando anúncios...</p>
     </div>
 
     <script type="module" src="script.js"></script>
+
 </body>
 </html>
