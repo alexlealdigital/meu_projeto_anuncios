@@ -23,7 +23,7 @@ async function carregarAnuncios() {
 
     try {
         const querySnapshot = await getDocs(collection(db, "anuncios"));
-
+        
         if (querySnapshot.empty) {
             adContainer.innerHTML = "<p>Nenhum anúncio disponível.</p>";
             console.warn("⚠ Nenhum anúncio encontrado no Firestore.");
@@ -31,7 +31,7 @@ async function carregarAnuncios() {
         }
 
         adContainer.innerHTML = ""; // Limpa a mensagem de carregamento
-
+        
         querySnapshot.forEach((doc) => {
             const anuncio = doc.data();
             console.log("✅ Anúncio carregado:", anuncio);
@@ -41,14 +41,12 @@ async function carregarAnuncios() {
             adCard.classList.add("ad-card");
 
             adCard.innerHTML = `
-                <div class="ad-container">
-                    <img class="ad-img" src="${anuncio.imagem}" alt="${anuncio.titulo}">
-                    <div class="ad-info">
-                        <h2>${anuncio.titulo}</h2>
-                        <p>${anuncio.descricao}</p>
-                    </div>
-                    <a class="ad-button" href="${anuncio.link}" target="_blank">Visitar</a>
+                <img src="${anuncio.imagem}" alt="Anúncio">
+                <div class="ad-text">
+                    <strong>${anuncio.titulo}</strong><br>
+                    ${anuncio.descricao}
                 </div>
+                <a href="${anuncio.link}" target="_blank">Visitar</a>
             `;
 
             adContainer.appendChild(adCard);
