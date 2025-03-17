@@ -1,17 +1,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// Configuração do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyAZMXBbStSpVC0cY3iZpWSgNnThXHjDRNE",
     authDomain: "adslzweb.firebaseapp.com",
     projectId: "adslzweb",
-    storageBucket: "adslzweb.firebasestorage.app",
+    storageBucket: "adslzweb.appspot.com",
     messagingSenderId: "728846463963",
     appId: "1:728846463963:web:ef72c03c782a36758d6dfe"
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -23,7 +21,8 @@ async function carregarAnuncios() {
 
     try {
         const querySnapshot = await getDocs(collection(db, "anuncios"));
-        
+        console.log("QuerySnapshot:", querySnapshot); // Verifique se há documentos
+
         if (querySnapshot.empty) {
             adContainer.innerHTML = "<p>Nenhum anúncio disponível.</p>";
             console.warn("⚠ Nenhum anúncio encontrado no Firestore.");
@@ -34,9 +33,8 @@ async function carregarAnuncios() {
         
         querySnapshot.forEach((doc) => {
             const anuncio = doc.data();
-            console.log("✅ Anúncio carregado:", anuncio);
+            console.log("Documento:", doc.id, "=>", anuncio); // Verifique os dados de cada documento
 
-            // Criando o layout do anúncio
             const adCard = document.createElement("div");
             adCard.classList.add("ad-card");
 
