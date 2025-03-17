@@ -1,54 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anúncios Dinâmicos</title>
+    <title>Anúncios</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        .ad-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin: 10px auto;
-            max-width: 320px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .ad-card img {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-        }
-        .ad-card .ad-text {
-            flex-grow: 1;
-            padding: 0 10px;
-            text-align: left;
-        }
-        .ad-card a {
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #ads { font-size: 24px; margin-top: 20px; padding: 10px; border: 1px solid #000; }
     </style>
 </head>
 <body>
+    <h1>Anúncios do Firebase</h1>
+    <div id="ads">Carregando anúncios...</div>
 
-    <h1>Anúncios</h1>
-    <div id="ad-container">
-        <p>Carregando anúncios...</p>
-    </div>
+    <script>
+        async function fetchAds() {
+            const response = await fetch('https://seu-servidor.netlify.app/ads'); // Atualize com seu domínio Netlify
+            const data = await response.json();
+            const adsArray = Object.values(data);
+            let index = 0;
 
-    <script type="module" src="script.js"></script>
+            function showAd() {
+                document.getElementById('ads').innerText = adsArray[index];
+                index = (index + 1) % adsArray.length;
+            }
 
+            showAd();
+            setInterval(showAd, 5000); // Troca de anúncio a cada 5 segundos
+        }
+
+        fetchAds();
+    </script>
 </body>
 </html>
